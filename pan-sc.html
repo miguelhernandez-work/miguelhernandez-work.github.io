@@ -1,6 +1,23 @@
-(function() {
-    /* version 1.8 - Bookmarklet Generator @ https://miguelhernandez-work.github.io/pan-sc.html */
-    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmarklet Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        textarea { width: 100%; height: 300px; font-family: monospace; }
+        button { margin-top: 10px; padding: 8px 12px; cursor: pointer; }
+        #bookmarkletLink { display: block; margin-top: 15px; font-size: 16px; color: blue; text-decoration: underline; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <label for="apiKey">PANORAMA-API-KEY:</label>
+    <input type="text" id="apiKey" placeholder="Enter API Key">
+    <br>
+    <label for="scriptBox">JavaScript Code:</label>
+    <textarea id="scriptBox" rows="5" cols="50">(function() {
+    /* version 1.7 OFFLINE VERSION -- CHECK GITHUB ACCESS TO https://raw.githubusercontent.com/miguelhernandez-work/miguelhernandez-work.github.io/refs/heads/main/pano-sc.js */
     let cachedPreviews = {};
     let lastHoveredItem = null;
     let highestZIndex = 10000;
@@ -135,7 +152,7 @@
         controlsDiv.style.marginRight = "50px";
 
         let closeButton = document.createElement("span");
-        closeButton.innerHTML = "✖";
+        closeButton.innerHTML = "&#10006;";
         closeButton.style.cursor = "pointer";
         closeButton.style.fontWeight = "bold";
         closeButton.style.marginLeft = "10px";
@@ -280,4 +297,46 @@
     .then(response => response.json())
     .then(data => showDraggableModal(data.result,true))
     .catch(error => showDraggableModal({ "@name": "Error", "details": error.toString() }));
-})();
+})();</textarea>
+<script>
+    let scriptVersion = "Unknown";
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        // Fetch the script from GitHub and populate the textarea
+        fetch("https://raw.githubusercontent.com/miguelhernandez-work/miguelhernandez-work.github.io/refs/heads/main/pano-sc.js")
+            .then(response => response.text())
+            .then(code => {
+                document.getElementById("scriptBox").value = code;
+            })
+            .catch(error => {
+                alert("// Error loading script: " + error);
+            });
+    });
+    function generateBookmarklet() {
+            let apiKey = document.getElementById("apiKey").value.trim();
+            let script = document.getElementById("scriptBox").value;
+            let scriptVersion = "Unknown";
+                // Extract version from the script (e.g., "/* version 1.8 - ... */")
+                const versionMatch = script.match(/\/\* version ([\d.]+) -/);
+                    if (versionMatch) {
+                        scriptVersion = versionMatch[1];
+                    }
+            if (!apiKey) {
+                alert("Please enter a PANORAMA-API-KEY");
+                return;
+            }
+            
+            let modifiedScript = script.replace(/xxxxxx/g, apiKey);
+            let bookmarkletCode = "javascript:" + encodeURIComponent(modifiedScript);
+            let link = document.getElementById("bookmarkletLink");
+            link.href = bookmarkletCode;
+            link.innerText = `Pano-SmartConsole-v${scriptVersion}`;
+        }
+        
+</script>
+    <br>
+    <button onclick="generateBookmarklet()">Generate</button>
+    <p>Drag this link to your bookmarks bar:</p>
+    <a id="bookmarkletLink" href="#">[Generated Bookmarklet]</a>
+</body>
+</html>
