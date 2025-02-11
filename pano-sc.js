@@ -1,16 +1,11 @@
 (function() {
-    //version 1.7 - now loaded via a bookmarklet reading a github file 'miguelhernandez-work.github.io/pano-sc.js'
-    if (typeof API_KEY === "undefined") {
-        console.error("API_KEY is not defined. Make sure the bookmarklet initializes it.");
-        return;
-    }
+    //version 1.7 - now loaded via a bookmarklet generator reading a github file 'miguelhernandez-work.github.io/pano-sc.js'
     
-    alert("Your API Key is: " + API_KEY);
     let cachedPreviews = {};
     let lastHoveredItem = null;
     let highestZIndex = 10000;
     let modalOffset = { x: 50, y: 50 };
-    var X_PAN_KEY = window.API_KEY;
+    const X_PAN_KEY = "xxxxxx";
 
 
     function showHoverPreview(member, event) {
