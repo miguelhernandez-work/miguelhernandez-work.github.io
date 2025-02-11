@@ -1,6 +1,6 @@
 (function() {
+    /* version 1.9 - hide hovers when modals are interacted with */
     /* version 1.8 - Bookmarklet Generator @ https://miguelhernandez-work.github.io/pan-sc.html */
-    
     let cachedPreviews = {};
     let lastHoveredItem = null;
     let highestZIndex = 10000;
@@ -58,7 +58,7 @@
             preview.style.boxShadow = "2px 2px 10px rgba(0,0,0,0.2)";
             preview.style.zIndex = highestZIndex + 2;
             document.body.appendChild(preview);
-        }
+            }
         let content = `<h3>${data["@name"]}</h3><br>`;
         if (data["ip-netmask"]) {
             content += `IP: ${data["ip-netmask"]}`;
@@ -250,6 +250,8 @@
     function makeDraggable(modal, titleBar) {
         let offsetX = 0, offsetY = 0, isDragging = false;
         titleBar.onmousedown = (e) => {
+            let previews = document.querySelectorAll("#hoverPreview");
+            previews.forEach(preview => preview.style.display = "none");
             isDragging = true;
             offsetX = e.clientX - modal.offsetLeft;
             offsetY = e.clientY - modal.offsetTop;
