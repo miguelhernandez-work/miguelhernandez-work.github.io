@@ -172,7 +172,7 @@ if ($MyInvocation.InvocationName -eq '.') {
 }
 
 if ($args.Count -eq 0) {
-    Write-Host "`n==== LLDP Debugger Interactive Menu ====" -ForegroundColor Cyan
+    Write-Host "`n==== LLDP Tool Interactive Menu ====" -ForegroundColor Cyan
     Write-Host "1. Find eligible interfaces for LLDP capture."
     Write-Host "2. Perform LLDP capture ALL eligible interfaces."
     Write-Host "3. Show LLDP ports from capture(s)."
