@@ -5,6 +5,9 @@
 #       - Note: Intel firmware may not expose LLDP frames to the OS, see Intel docs: 
 #       - https://edc.intel.com/content/www/us/en/design/products/ethernet/adapters-and-devices-user-guide/firmware-link-layer-discovery-protocol-fw-lldp/
 #       - on Dell BIOS > go to NIC Configuration > edit the NIC > check "LLDP Agent" setting, it should be disabled for the OS to be able to receive LLDP frames.
+#       - use Redfish to modify the bios setting programmatically: https://github.com/dell/iDRAC-Redfish-Scripting/blob/master/Redfish%20Python/GetSetOemNetworkDevicePropertiesREDFISH.py
+#       GetSetOemNetworkDevicePropertiesREDFISH.py -ip 10.x.x.x -u xUserx -p xPassx --set NIC.Slot.2-1-1 --attribute-names INTEL_LLDPAgent --attribute-values Disabled
+#       GetSetOemNetworkDevicePropertiesREDFISH.py -ip 10.x.x.x -u xUserx -p xPassx --set NIC.Slot.2-2-1 --attribute-names INTEL_LLDPAgent --attribute-values Disabled --reboot
 #
 
 function Decode-LLDP {
